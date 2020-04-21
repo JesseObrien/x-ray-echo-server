@@ -9,4 +9,12 @@ _This service is for_
 - If you've ever wanted to see what the X-Ray segment data looks like locally before it's sent to amazon's servers
 - You just want to have a local daemon available that doesn't send data to AWS when you're doing testing or running local services
 
+### Install
+
+`go get -u github.com/jesseobrien/x-ray-echo-server`
+
 ### Running
+
+`$ x-ray-echo-server`
+
+### Docker

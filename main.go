@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"net"
@@ -126,14 +125,8 @@ func handleUDPConnection(c *net.UDPConn) {
 		case "response":
 			continue
 		default:
-			var prettyJSON bytes.Buffer
-			err := json.Indent(&prettyJSON, []byte(payload), "", "  ")
-			if err != nil {
-				log.Warn(err)
-				continue
-			}
 			log.Info("Xray Segment Received")
-			log.Infof("%v", string(prettyJSON.Bytes()))
+			log.Infof("%v", payload)
 		}
 	}
 }
