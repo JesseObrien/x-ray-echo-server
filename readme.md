@@ -18,3 +18,7 @@ _This service is for_
 `$ x-ray-echo-server`
 
 ### Docker
+
+`docker pull jesseobrien/x-ray-echo-server:latest`
+
+`docker run -d --name xray-echo-server -p 2000:2000/udp -p 2000:2000/tcp jesseobrien/x-ray-echo-server`
