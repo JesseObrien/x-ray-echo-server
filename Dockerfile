@@ -1,10 +1,11 @@
 FROM golang AS build
+LABEL autodelete="true"
 
 WORKDIR /app
 
 ADD . /app
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o x-ray-echo-server .
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o x-ray-echo-server .
 
 
 FROM alpine:latest
