@@ -9,7 +9,6 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/aws/aws-xray-sdk-go/xray"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -63,7 +62,7 @@ func handleTCPConnection(c net.Conn) {
 		return
 	}
 
-	fmt.Println("TCP Read -> ", string(netData))
+	log.Infof("TCP Read -> %s", string(netData))
 }
 
 func startUDPServer(wg *sync.WaitGroup) {
@@ -109,7 +108,7 @@ func handleUDPConnection(c *net.UDPConn) {
 		payload := chunks[1]
 
 		// Unmarshal the segment so we can figure out if we need to log it or not
-		seg := &xray.Segment{}
+		seg := &XraySegment{}
 		if err := json.Unmarshal([]byte(payload), seg); err != nil {
 			log.Warn(err)
 			continue
@@ -125,8 +124,14 @@ func handleUDPConnection(c *net.UDPConn) {
 		case "response":
 			continue
 		default:
-			log.Info("Xray Segment Received")
-			log.Infof("%v", payload)
+			log.Info("")
+			log.Info("──────────────────────────")
+			log.Info("⚡ New Segment Received ⚡")
+			log.Info("──────────────────────────")
+			padding := ""
+			seg.Display(false, &padding)
+			log.Info("────── End Segment ───────")
+			log.Info("")
 		}
 	}
 }
